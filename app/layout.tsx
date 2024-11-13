@@ -14,12 +14,13 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-	title: 'Kiosk',
+	title: 'Kiosk Next.js',
 	description:
-		'Kiosk Next.js With App Router, Tailwind CSS, TypeScript and Prisma',
+		'Kiosk built with Next.js, App Router, Tailwind CSS, TypeScript, PostgreSQL and Prisma',
 	authors: [
 		{
 			name: 'Mateo Tavera',
+			url: 'https://www.linkedin.com/in/matiudev/',
 		},
 	],
 };
