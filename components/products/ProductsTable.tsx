@@ -1,4 +1,4 @@
-import { type Product } from '@prisma/client';
+import { ProductWithCategory } from '@/src/types/products';
 import Link from 'next/link';
 import { formatCurrency } from '@/src/utils/currency';
 
@@ -9,7 +9,7 @@ const TABLE_HEADER_OPTIONS = [
 ] as const;
 
 type ProductTableProps = {
-	products: Product[];
+	products: ProductWithCategory[];
 };
 
 export default function ProductTable({ products }: ProductTableProps) {
@@ -50,7 +50,7 @@ function TableHeader({ label = '' }) {
 	);
 }
 
-function TableRow({ product }: { product: Product }) {
+function TableRow({ product }: { product: ProductWithCategory }) {
 	return (
 		<tr>
 			<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
@@ -60,7 +60,7 @@ function TableRow({ product }: { product: Product }) {
 				{formatCurrency(product.price)}
 			</td>
 			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-				{product.categoryId}
+				{product.category.name}
 			</td>
 			<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
 				<Link
