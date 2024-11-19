@@ -1,7 +1,7 @@
 import ProductTable from '@/components/products/ProductsTable';
 import Heading from '@/components/ui/Heading';
 import { prisma } from '@/src/lib/prisma';
-import ProductsPagination from '../../../components/products/ProductsPagination';
+import ProductsPagination from '@/components/products/ProductsPagination';
 
 async function productCount() {
 	try {
@@ -33,9 +33,7 @@ async function getProducts({ page = 1, pageSize = 10 }) {
 }
 
 type ProductsPageProps = {
-	searchParams: {
-		page: string;
-	};
+	searchParams: Promise<{ page: string }>;
 };
 
 export default async function ProductsPage({
