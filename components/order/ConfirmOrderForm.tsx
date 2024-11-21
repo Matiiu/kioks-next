@@ -1,7 +1,8 @@
 import Form from 'next/form';
 import { FormEvent } from 'react';
 import { createOrder } from '@/actions/order/create-order-action';
-import { orderConfirmationSchema, type OrderItem } from '@/src/types/order';
+import { orderConfirmationSchema } from '@/src/schemas/order';
+import type { OrderItem } from '@/src/types/order';
 import { normalizeSpaces } from '@/src/utils/string';
 import { toast } from 'react-toastify';
 import { useStore } from '@/src/store/store';

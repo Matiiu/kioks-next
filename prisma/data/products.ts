@@ -1,4 +1,7 @@
-export const products = [
+import { normalizeText } from '../../src/utils/string';
+import { Product } from '@prisma/client';
+
+export const products: Omit<Product, 'id'>[] = [
 	{
 		name: 'Café Caramel con Chocolate',
 		price: 59.9,
@@ -24,7 +27,7 @@ export const products = [
 		categoryId: 1,
 	},
 	{
-		name: 'Malteada Fria con Chocolate Grande',
+		name: 'Malteada Fría con Chocolate Grande',
 		price: 54.9,
 		image: 'cafe_05',
 		categoryId: 1,
@@ -353,4 +356,7 @@ export const products = [
 		image: 'pizzas_11',
 		categoryId: 3,
 	},
-];
+].map((product) => ({
+	...product,
+	normalizedName: normalizeText(product.name),
+}));

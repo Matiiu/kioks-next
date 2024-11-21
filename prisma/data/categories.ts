@@ -1,4 +1,6 @@
-export const categories = [
+import { Category } from '@prisma/client';
+
+export const categories: Omit<Category, 'id'>[] = [
 	{
 		slug: 'cafe',
 		name: 'Café',

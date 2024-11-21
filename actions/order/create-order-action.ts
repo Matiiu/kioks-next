@@ -1,6 +1,6 @@
 'use server';
 import { prisma } from '@/src/lib/prisma';
-import { orderConfirmationSchema } from '@/src/types/order';
+import { orderConfirmationSchema } from '@/src/schemas/order';
 import { normalizeSpaces } from '@/src/utils/string';
 import { responseSchema } from '@/src/utils/errors';
 

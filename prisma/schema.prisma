@@ -23,6 +23,7 @@ model Category {
 model Product {
   id  Int  @id  @default(autoincrement())
   name  String
+  normalizedName  String  @default("")
   price  Float
   image  String
   categoryId  Int

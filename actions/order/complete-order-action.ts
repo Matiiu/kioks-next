@@ -1,7 +1,7 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/src/lib/prisma';
-import { orderIdSchema } from '@/src/types/order';
+import { orderIdSchema } from '@/src/schemas/order';
 
 export async function completeOrder(formData: FormData) {
 	const orderId = formData.get('order_id');
