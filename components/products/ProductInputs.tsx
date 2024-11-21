@@ -1,5 +1,6 @@
 import { prisma } from '@/src/lib/prisma';
 import UploadImage from '@/components/products/UploadImage';
+import { Product } from '@prisma/client';
 
 async function findCategories() {
 	try {
@@ -11,7 +12,11 @@ async function findCategories() {
 	}
 }
 
-export default async function ProductInputs() {
+type ProductInputsProps = {
+	product?: Product;
+};
+
+export default async function ProductInputs({ product }: ProductInputsProps) {
 	const categories = await findCategories();
 
 	return (
@@ -26,6 +31,7 @@ export default async function ProductInputs() {
 					name="name"
 					className="block w-full p-3 bg-slate-100"
 					placeholder="Nombre Producto"
+					defaultValue={product?.name}
 				/>
 			</div>
 
@@ -38,6 +44,7 @@ export default async function ProductInputs() {
 					name="price"
 					className="block w-full p-3 bg-slate-100"
 					placeholder="Precio Producto"
+					defaultValue={product?.price}
 				/>
 			</div>
 
@@ -49,6 +56,7 @@ export default async function ProductInputs() {
 					className="block w-full p-3 bg-slate-100"
 					id="categoryId"
 					name="categoryId"
+					defaultValue={product?.categoryId}
 				>
 					<option value="" disabled>
 						-- Seleccione --
@@ -62,7 +70,7 @@ export default async function ProductInputs() {
 				</select>
 			</div>
 
-			<UploadImage />
+			<UploadImage image={product?.image} />
 		</>
 	);
 }

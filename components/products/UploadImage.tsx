@@ -3,10 +3,16 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
 import { TbPhotoPlus } from 'react-icons/tb';
+import { getImagePath } from '@/src/utils/products';
 
-export default function UploadImage() {
+type UploadImageProps = {
+	image?: string;
+};
+
+export default function UploadImage({ image }: UploadImageProps) {
 	const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
 	const [imageUrl, setImageUrl] = useState('');
+	const imageValue = imageUrl || image;
 
 	return (
 		<CldUploadWidget
@@ -16,7 +22,6 @@ export default function UploadImage() {
 			}}
 			onSuccess={(result, { widget }) => {
 				if (result.event === 'success' && typeof result.info === 'object') {
-					console.log('result:', result);
 					widget.close();
 					setImageUrl(result.info?.secure_url || '');
 				}
@@ -46,7 +51,18 @@ export default function UploadImage() {
 						</section>
 					</div>
 
-					<input type="hidden" name="image" value={imageUrl} />
+					{!!image && !imageUrl && (
+						<div className="space-y-2">
+							<label htmlFor="">ImagenActual:</label>
+							<div className="flex justify-center items-center">
+								<figure className="relative w-64 h-64 aspect-square">
+									<Image fill src={getImagePath(image)} alt="product Image" />
+								</figure>
+							</div>
+						</div>
+					)}
+
+					<input type="hidden" name="image" value={imageValue} />
 				</>
 			)}
 		</CldUploadWidget>

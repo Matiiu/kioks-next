@@ -10,7 +10,7 @@ export const searchProductSchema = z.object({
 		.min(1, { message: 'La búsqueda no puede estar vacía' }),
 });
 
-export const productSchema = z.object({
+export const draftProductSchema = z.object({
 	name: z
 		.string({
 			required_error: 'El Nombre del Producto no puede ir vacío',
@@ -41,6 +41,15 @@ export const productSchema = z.object({
 			required_error: 'La Imagen es Obligatoria',
 			invalid_type_error: 'La Imagen debe ser una URL',
 		})
-		.min(1, { message: 'La Imagen es Obligatoria' })
-		.url({ message: 'La Imagen no es valida' }),
+		.min(1, { message: 'La Imagen es Obligatoria' }),
 });
+
+export const productIdSchema = z
+	.string({
+		required_error: 'El ID del Producto es Obligatorio',
+		invalid_type_error: 'El ID del Producto debe ser un número',
+	})
+	.transform((val) => parseInt(val))
+	.refine((val) => val > 0, {
+		message: 'El ID del Producto debe ser mayor a 0',
+	});

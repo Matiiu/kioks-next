@@ -2,6 +2,7 @@ import Heading from '@/components/ui/Heading';
 import AddProductForm from '@/components/products/AddProductForm';
 import { prisma } from '@/src/lib/prisma';
 import ProductInputs from '@/components/products/ProductInputs';
+import GoBackButton from '../../../../components/ui/GoBackButton';
 
 async function findCategories() {
 	try {
@@ -19,6 +20,7 @@ export default async function NewProductPage() {
 	return (
 		<>
 			<Heading>Nuevo Productos</Heading>
+			<GoBackButton />
 			<AddProductForm>
 				<ProductInputs />
 			</AddProductForm>

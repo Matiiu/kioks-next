@@ -6,6 +6,11 @@ export default function ProductsPagination({ page = 0, totalPages = 0 }) {
 	const isNextPageDisabled = page === totalPages;
 	const isPrevPageDisabled = page === 1;
 	const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+	console.log('page:', page);
+	console.log(
+		'currentpage: ',
+		pages.find((currentPage) => currentPage === page),
+	);
 
 	return (
 		<nav className="flex justify-center items-center py-10">
@@ -19,7 +24,7 @@ export default function ProductsPagination({ page = 0, totalPages = 0 }) {
 				<Link
 					key={currentPage}
 					href={`/admin/products?page=${currentPage}`}
-					className={`bg-white px-4 py-2 text-sm ring-1 ring-inset ring-gray-300 focus:z-20 focus:outline-offset-0 ${currentPage === page ? 'bg-slate-200 text-slate-800' : 'text-slate-900'}`}
+					className={`bg-white px-4 py-2 text-sm ring-1 ring-inset ring-gray-300 focus:z-20 focus:outline-offset-0 ${currentPage === page ? 'bg-slate-300 text-slate-800' : 'text-slate-900'}`}
 				>
 					{currentPage}
 				</Link>

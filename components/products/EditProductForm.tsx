@@ -5,15 +5,18 @@ import { draftProductSchema } from '@/src/schemas/products';
 import { toast } from 'react-toastify';
 import { normalizeSpaces } from '@/src/utils/string';
 import type { DraftProduct } from '@/src/types/products';
-import { createProduct } from '@/actions/products/create-product';
-import { useRouter } from 'next/navigation';
+import { updateProduct } from '@/actions/products/update-product';
+import { useRouter, useParams } from 'next/navigation';
 
-type AddProductFormProps = {
+type EditProductFormProps = {
 	children: React.ReactNode;
 };
 
-export default function AddProductForm({ children }: AddProductFormProps) {
+export default function EditProductForm({ children }: EditProductFormProps) {
 	const router = useRouter();
+	const params = useParams();
+	const productId =
+		params?.id && typeof params.id === 'string' ? params.id : '';
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -43,17 +46,17 @@ export default function AddProductForm({ children }: AddProductFormProps) {
 		}
 
 		try {
-			const { errors, error, success } = await createProduct(result.data);
-			if (errors.length) {
-				errors.forEach((error) => toast.error(error.message));
+			const response = await updateProduct(productId, result.data);
+			if (response.errors.length) {
+				response.errors.forEach((error) => toast.error(error.message));
 				return;
 			}
-			if (error) {
-				toast.error(error);
+			if (response.error) {
+				toast.error(response.error);
 				return;
 			}
 
-			toast.success(success);
+			toast.success(response.success);
 			router.push('/admin/products');
 		} catch (error) {
 			console.error('Error creating product:', error);
@@ -71,7 +74,7 @@ export default function AddProductForm({ children }: AddProductFormProps) {
 					type="submit"
 					className="bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase cursor-pointer"
 				>
-					Registrar Producto
+					Guarda Cambios
 				</button>
 			</Form>
 		</div>
