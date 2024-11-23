@@ -1,6 +1,8 @@
 import { prisma } from '@/src/lib/prisma';
 import { consoleError, consoleSuccess } from '@/src/utils/logs/colors';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
 	try {
 		const orders = await prisma.order.findMany({
