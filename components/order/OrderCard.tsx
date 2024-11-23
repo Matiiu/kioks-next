@@ -2,12 +2,43 @@ import Form from 'next/form';
 import { type OrderWithProducts } from '@/src/types/order';
 import { formatCurrency } from '@/src/utils/currency';
 import { completeOrder } from '@/actions/order/complete-order-action';
+import { toast } from 'react-toastify';
+import { mutate } from 'swr';
 
 type OrderCardProps = {
 	order: OrderWithProducts;
 };
 
 export default function OrderCard({ order }: OrderCardProps) {
+	const handleCompleteOrder = async (formData: FormData) => {
+		try {
+			const data = {
+				orderId: formData.get('order_id'),
+			};
+
+			if (!data.orderId || typeof data.orderId !== 'string') {
+				toast.error('Error completando la orden');
+				return;
+			}
+			const { errors, error, success } = await completeOrder(data.orderId);
+			console.log({ errors, error, success });
+			if (errors.length) {
+				errors.forEach((error) => toast.error(error.message));
+				return;
+			}
+			if (error) {
+				toast.error(error);
+				return;
+			}
+			toast.success(success);
+			// Invalidate the cache
+			mutate('/admin/orders/api');
+		} catch (error) {
+			console.error('Error completando la orden:', error);
+			toast.error('Error completando la orden');
+		}
+	};
+
 	return (
 		<section
 			aria-labelledby="summary-heading"
@@ -42,13 +73,13 @@ export default function OrderCard({ order }: OrderCardProps) {
 				</div>
 			</dl>
 
-			<Form action={completeOrder}>
+			<Form action={handleCompleteOrder}>
 				<input type="hidden" name="order_id" value={order.id} />
 				<button
 					type="submit"
 					className="bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold cursor-pointer"
 				>
-					Marcar Orden Completad
+					Marcar Orden Completada
 				</button>
 			</Form>
 		</section>

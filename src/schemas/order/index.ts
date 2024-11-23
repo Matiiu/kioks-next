@@ -14,11 +14,9 @@ export const orderConfirmationSchema = z.object({
 	order: z.array(orderItemSchema),
 });
 
-export const orderIdSchema = z.object({
-	orderId: z
-		.string()
-		.transform((val) => parseInt(val))
-		.refine((val) => val > 0, {
-			message: 'El ID de la orden debe ser mayor a 0',
-		}),
-});
+export const orderIdSchema = z
+	.string()
+	.transform((val) => parseInt(val))
+	.refine((val) => val > 0, {
+		message: 'El ID de la orden debe ser mayor a 0',
+	});
